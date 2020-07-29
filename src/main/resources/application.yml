@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: wechat
+  datasource:
+    url: jdbc:mysql://39.96.204.153:13306/wechat-test?serverTimezone=Asia/Shanghai
+    username: root
+    password: litaomysql5548..
+    driver-class-name: com.mysql.cj.jdbc.Driver
+MinioClient:
+  endpoint: http://39.96.204.153:19000/
+  accessKey: litao
+  accessSecret: litao5548..
+  bucket: myfile
+mybatis:
+  mapper-locations: classpath*:/mapper/*.xml
