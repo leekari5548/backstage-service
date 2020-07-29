@@ -61,6 +61,7 @@ public class FileServiceImpl implements FileService {
         fileRecord.setCreateTime(new Date());
         fileRecord.setFileType(file.getContentType());
         fileRecord.setCreateUser("admin");
+        fileRecord.setDelete(0);
         fileRecord.setMd5(CommonUtils.md5(new String(file.getBytes())));
         fileRecordDao.insertRecord(fileRecord);
         LogRecord logRecord = new LogRecord();

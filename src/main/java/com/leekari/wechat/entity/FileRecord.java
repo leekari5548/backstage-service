@@ -16,6 +16,7 @@ public class FileRecord {
     private String bucket;
     private String fileType;
     private String storeFilename;
+    private Integer delete;
 
     @Override
     public String toString() {
@@ -28,7 +29,16 @@ public class FileRecord {
                 ", bucket='" + bucket + '\'' +
                 ", fileType='" + fileType + '\'' +
                 ", storeFilename='" + storeFilename + '\'' +
+                ", delete=" + delete +
                 '}';
+    }
+
+    public Integer getDelete() {
+        return delete;
+    }
+
+    public void setDelete(Integer delete) {
+        this.delete = delete;
     }
 
     public String getStoreFilename() {
