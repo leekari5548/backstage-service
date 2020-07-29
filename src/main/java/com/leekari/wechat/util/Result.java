@@ -50,6 +50,8 @@ public class Result<T> {
         this.type = builder.type;
     }
 
+    public Result(){}
+
     public static class Builder<T>{
         private int code;
         private String message;

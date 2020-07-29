@@ -23,4 +23,10 @@
         #{md5,jdbcType=VARCHAR},#{bucket,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
         #{createUser,jdbcType=VARCHAR},#{storeFilename,jdbcType=VARCHAR})
     </insert>
+
+    <select id="getFileRecordById" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="baseColumn"></include>
+        from file_record
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
 </mapper>

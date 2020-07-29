@@ -1,26 +1,21 @@
 package com.leekari.wechat.controller;
 
-import com.leekari.wechat.config.MinioConfiguration;
 import com.leekari.wechat.define.ModuleEnum;
 import com.leekari.wechat.service.FileService;
 import com.leekari.wechat.util.Result;
-import io.minio.GetObjectArgs;
-import io.minio.MinioClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
-import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.BufferedOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * @author litao
@@ -49,19 +44,10 @@ public class FileController {
 
     }
 
-    @RequestMapping("download/{fileName}")
-    public Result<String> download(@PathVariable String fileName, final ServletServerHttpResponse response){
-        MinioClient minioClient = MinioConfiguration.minioClient();
+    @RequestMapping("download/{fileId}")
+    public Result<String> download(@PathVariable String fileId, final HttpServletResponse response){
         try {
-            InputStream stream =
-                    minioClient.getObject(
-                            GetObjectArgs.builder().bucket(bucket).object(fileName).build());
-            byte[] data = getBytesByInputStream(stream);
-            OutputStream outputStream = new BufferedOutputStream(response.getBody());
-            outputStream.write(data);
-            outputStream.flush();
-            outputStream.close();
-            stream.close();
+            fileService.downloadFile(fileId, response);
         }catch (Exception e){
             e.printStackTrace();
             return new Result.Builder<String>().code(-100).type(ModuleEnum.FILE_MODULE.name).message("file isn't exist").builder();

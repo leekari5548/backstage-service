@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface FileRecordDao {
 
     int insertRecord(FileRecord fileRecord);
+
+    FileRecord getFileRecordById(String id);
 }
