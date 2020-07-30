@@ -1,5 +1,6 @@
 package com.leekari.wechat.controller;
 
+import com.leekari.wechat.config.AuthVerify;
 import com.leekari.wechat.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ public class TestController {
     @Autowired
     private RedisUtils redisUtils;
 
+    @AuthVerify
     @RequestMapping("/test")
     public String test(){
         redisUtils.set("1","3");

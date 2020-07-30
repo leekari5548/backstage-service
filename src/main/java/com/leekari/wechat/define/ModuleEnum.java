@@ -6,7 +6,7 @@ package com.leekari.wechat.define;
  * @description
  */
 public enum ModuleEnum {
-    FILE_MODULE(1, "file_module");
+    FILE_MODULE(1, "file_module"),LOGIN_MODULE(2, "login_module");
     public int code;
     public String name;
 

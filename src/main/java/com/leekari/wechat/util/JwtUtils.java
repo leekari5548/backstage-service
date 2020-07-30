@@ -14,7 +14,7 @@ import java.util.Map;
  * @date 2020/7/30 17:35
  * @description
  */
-public class TestJwtUtils {
+public class JwtUtils {
 
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -23,7 +23,7 @@ public class TestJwtUtils {
 
     public static final long EXPIRITION = 1000 * 24 * 60 * 60 * 7;
 
-    public static final String APPSECRET_KEY = "congge_secret";
+    public static final String APP_SECRET_KEY = "leekari_secret";
 
     private static final String ROLE_CLAIMS = "rol";
 
@@ -45,7 +45,7 @@ public class TestJwtUtils {
                 .claim("img", user.getPicture())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRITION))
-                .signWith(SignatureAlgorithm.HS256, APPSECRET_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, APP_SECRET_KEY).compact();
         return token;
     }
 
@@ -67,16 +67,14 @@ public class TestJwtUtils {
                 .claim("username",username)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRITION))
-                .signWith(SignatureAlgorithm.HS256, APPSECRET_KEY).compact();
+                .signWith(SignatureAlgorithm.HS256, APP_SECRET_KEY).compact();
         return token;
     }
 
     public static Claims checkJWT(String token) {
         try {
-            final Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
-            return claims;
+            return Jwts.parser().setSigningKey(APP_SECRET_KEY).parseClaimsJws(token).getBody();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -87,7 +85,7 @@ public class TestJwtUtils {
      * @return
      */
     public static String getUsername(String token){
-        Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(APP_SECRET_KEY).parseClaimsJws(token).getBody();
         return claims.get("username").toString();
     }
 
@@ -97,7 +95,7 @@ public class TestJwtUtils {
      * @return
      */
     public static String getUserRole(String token){
-        Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(APP_SECRET_KEY).parseClaimsJws(token).getBody();
         return claims.get("rol").toString();
     }
 
@@ -107,23 +105,8 @@ public class TestJwtUtils {
      * @return
      */
     public static boolean isExpiration(String token){
-        Claims claims = Jwts.parser().setSigningKey(APPSECRET_KEY).parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parser().setSigningKey(APP_SECRET_KEY).parseClaimsJws(token).getBody();
         return claims.getExpiration().before(new Date());
-    }
-
-    public static void main(String[] args) {
-        String name = "acong";
-        String role = "rol";
-        String token = createToken(name,role);
-        System.out.println(token);
-
-        Claims claims = checkJWT(token);
-        System.out.println(claims.get("username"));
-
-        System.out.println(getUsername(token));
-        System.out.println(getUserRole(token));
-        System.out.println(isExpiration(token));
-
     }
 }
 
