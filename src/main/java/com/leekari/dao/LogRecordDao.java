@@ -1,6 +1,6 @@
 package com.leekari.dao;
 
-import com.leekari.wechat.entity.LogRecord;
+import com.leekari.entity.LogRecord;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -1,6 +1,6 @@
 package com.leekari.util;
 
-import com.leekari.wechat.entity.User;
+import com.leekari.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

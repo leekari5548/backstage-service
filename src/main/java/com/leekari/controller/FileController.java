@@ -1,8 +1,8 @@
 package com.leekari.controller;
 
-import com.leekari.wechat.define.ModuleEnum;
-import com.leekari.wechat.service.FileService;
-import com.leekari.wechat.util.Result;
+import com.leekari.define.ModuleEnum;
+import com.leekari.service.FileService;
+import com.leekari.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

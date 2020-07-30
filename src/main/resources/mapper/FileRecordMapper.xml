@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leekari.dao.FileRecordDao">
+
+    <resultMap type="com.leekari.entity.FileRecord" id="BaseResultMap">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="filename" column="filename" jdbcType="VARCHAR"/>
+        <result property="fileType" column="file_type" jdbcType="VARCHAR"/>
+        <result property="md5" column="md5" jdbcType="VARCHAR"/>
+        <result property="bucket" column="bucket" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="storeFilename" column="store_filename" jdbcType="VARCHAR"/>
+        <result property="delete" column="is_delete" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="baseColumn">
+        `id`,`filename`,`file_type`,`md5`,`bucket`,`create_time`,`create_user`,`store_filename`,`is_delete`
+    </sql>
+
+    <insert id="insertRecord" parameterType="com.leekari.entity.FileRecord">
+        insert into file_record(<include refid="baseColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR},#{fileType,jdbcType=VARCHAR},
+        #{md5,jdbcType=VARCHAR},#{bucket,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
+        #{createUser,jdbcType=VARCHAR},#{storeFilename,jdbcType=VARCHAR},#{delete,jdbcType=INTEGER})
+    </insert>
+
+    <select id="getFileRecordById" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="baseColumn"></include>
+        from file_record
+        where id = #{id,jdbcType=VARCHAR} and is_delete = 0
+    </select>
+
+    <select id="getFileRecords" resultMap="BaseResultMap" parameterType="com.leekari.entity.FileRecord">
+        select <include refid="baseColumn"></include>
+        from file_record
+        where create_time &gt; #{date,jdbcType=TIMESTAMP} and is_delete = 0
+    </select>
+
+    <update id="updateRecord" parameterType="com.leekari.entity.FileRecord">
+        update file_record
+        set `is_delete` = #{delete,jdbcType=INTEGER}
+        where `id` = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateRecordBatch" parameterType="java.util.List">
+        <foreach collection="list" index="index" item="item" open="" close="" separator=";">
+            <if test="item != null">
+                update `file_record`
+                set `is_delete` = #{item.delete,jdbcType=INTEGER}
+                where `id` = #{item.id,jdbcType=VARCHAR}
+            </if>
+        </foreach>
+    </update>
+</mapper>

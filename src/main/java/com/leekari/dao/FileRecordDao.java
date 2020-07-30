@@ -1,6 +1,6 @@
 package com.leekari.dao;
 
-import com.leekari.wechat.entity.FileRecord;
+import com.leekari.entity.FileRecord;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

@@ -1,12 +1,12 @@
 package com.leekari.task;
 
-import com.leekari.wechat.config.MinioConfiguration;
-import com.leekari.wechat.dao.FileRecordDao;
-import com.leekari.wechat.dao.LogRecordDao;
-import com.leekari.wechat.define.ModuleEnum;
-import com.leekari.wechat.entity.FileRecord;
-import com.leekari.wechat.entity.LogRecord;
-import com.leekari.wechat.util.Result;
+import com.leekari.config.MinioConfiguration;
+import com.leekari.dao.FileRecordDao;
+import com.leekari.dao.LogRecordDao;
+import com.leekari.define.ModuleEnum;
+import com.leekari.entity.FileRecord;
+import com.leekari.entity.LogRecord;
+import com.leekari.util.Result;
 import io.minio.MinioClient;
 import io.minio.RemoveObjectsArgs;
 import io.minio.messages.DeleteError;

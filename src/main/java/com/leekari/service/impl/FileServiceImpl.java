@@ -1,13 +1,13 @@
 package com.leekari.service.impl;
 
-import com.leekari.wechat.config.MinioConfiguration;
-import com.leekari.wechat.dao.FileRecordDao;
-import com.leekari.wechat.dao.LogRecordDao;
-import com.leekari.wechat.define.ModuleEnum;
-import com.leekari.wechat.entity.FileRecord;
-import com.leekari.wechat.entity.LogRecord;
-import com.leekari.wechat.service.FileService;
-import com.leekari.wechat.util.CommonUtils;
+import com.leekari.config.MinioConfiguration;
+import com.leekari.dao.FileRecordDao;
+import com.leekari.dao.LogRecordDao;
+import com.leekari.define.ModuleEnum;
+import com.leekari.entity.FileRecord;
+import com.leekari.entity.LogRecord;
+import com.leekari.service.FileService;
+import com.leekari.util.CommonUtils;
 import io.minio.GetObjectArgs;
 import io.minio.MinioClient;
 import io.minio.ObjectWriteResponse;
