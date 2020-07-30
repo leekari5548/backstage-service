@@ -9,9 +9,3 @@ spring:
         namespace: dev
         file-extension: yml
         prefix: backstage-service
-  boot:
-    admin:
-      client:
-        url: http://${BASE_URL}:8088/
-        instance:
-          service-base-url: http://${BASE_URL}/

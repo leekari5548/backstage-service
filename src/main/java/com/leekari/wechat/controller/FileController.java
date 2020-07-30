@@ -25,8 +25,6 @@ import java.io.InputStream;
 @RestController
 @RequestMapping("/file/")
 public class FileController {
-    @Value("${MinioClient.bucket}")
-    private String bucket;
     @Autowired
     private FileService fileService;
 
