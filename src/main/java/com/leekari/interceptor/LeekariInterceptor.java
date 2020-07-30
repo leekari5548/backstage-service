@@ -1,11 +1,11 @@
-package com.leekari.wechat.interceptor;
+package com.leekari.interceptor;
 
 import com.alibaba.fastjson.JSONObject;
 import com.leekari.wechat.dao.LogRecordDao;
-import com.leekari.wechat.define.ErrorCode;
-import com.leekari.wechat.define.ModuleEnum;
+import com.leekari.define.ErrorCode;
+import com.leekari.define.ModuleEnum;
 import com.leekari.wechat.entity.LogRecord;
-import com.leekari.wechat.util.JwtUtils;
+import com.leekari.util.JwtUtils;
 import com.leekari.wechat.util.Result;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 
 /**
  * @author litao

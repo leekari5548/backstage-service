@@ -1,4 +1,4 @@
-package com.leekari.wechat.define;
+package com.leekari.define;
 
 /**
  * @author litao

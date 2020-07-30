@@ -1,4 +1,4 @@
-package com.leekari.wechat.util;
+package com.leekari.util;
 
 import com.leekari.wechat.entity.User;
 import io.jsonwebtoken.Claims;

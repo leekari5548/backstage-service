@@ -1,6 +1,6 @@
-package com.leekari.wechat.controller;
+package com.leekari.controller;
 
-import com.leekari.wechat.define.ModuleEnum;
+import com.leekari.define.ModuleEnum;
 import com.leekari.wechat.service.FileService;
 import com.leekari.wechat.util.Result;
 import org.slf4j.Logger;
