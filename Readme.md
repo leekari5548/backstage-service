@@ -12,6 +12,7 @@
 
 - **Badge**
 - **Related Efforts** 
+    - [wechat mini app](https://github.com/leekari5548/wechat-mini-app)
 - **Maintainers**
 - **Contributing**
 - **Licence**
