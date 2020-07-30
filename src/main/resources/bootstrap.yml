@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    nacos:
+      metadata:
+        management:
+          context-path: ${server.servlet.context-path}/actuator
+      config:
+        server-addr: ${BASE_URL}:18848
+        namespace: dev
+        file-extension: yml
+        prefix: backstage-service
+  boot:
+    admin:
+      client:
+        url: http://${BASE_URL}:8088/
+        instance:
+          service-base-url: http://${BASE_URL}/
