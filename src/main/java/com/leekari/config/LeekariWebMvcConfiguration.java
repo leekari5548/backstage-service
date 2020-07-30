@@ -1,6 +1,6 @@
 package com.leekari.config;
 
-import com.leekari.interceptor.LeekariInterceptor;
+import com.leekari.wechat.interceptor.LeekariInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
