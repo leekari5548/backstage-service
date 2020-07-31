@@ -17,4 +17,4 @@
 - **Contributing**
 - **Licence**
 
-   [GNU LGPL](./licence.md)
+   [GNU LGPL](LICENSE)
