@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.leekari.wechat.dao.LogRecordDao">
+<mapper namespace="com.leekari.dao.LogRecordDao">
 
-    <resultMap type="com.leekari.wechat.entity.LogRecord" id="BaseResultMap">
+    <resultMap type="com.leekari.entity.LogRecord" id="BaseResultMap">
         <id property="id" column="id" jdbcType="INTEGER"/>
         <result property="operateTime" column="operate_time" jdbcType="TIMESTAMP"/>
         <result property="operator" column="operator" jdbcType="VARCHAR"/>
@@ -14,7 +14,7 @@
         operate_time,operator,operation,`type`
     </sql>
 
-    <insert id="insertRecord" parameterType="com.leekari.wechat.entity.LogRecord">
+    <insert id="insertRecord" parameterType="com.leekari.entity.LogRecord">
         insert into log_record(<include refid="baseColumn"></include>)
         values(#{operateTime,jdbcType=TIMESTAMP},
         #{operator,jdbcType=VARCHAR},#{operation,jdbcType=VARCHAR},#{type,jdbcType=INTEGER})
