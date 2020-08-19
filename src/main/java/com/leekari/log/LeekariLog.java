@@ -69,76 +69,26 @@ public final class LeekariLog {
         logger = context.getLogger(name);
         logger.setLevel(Level.DEBUG);
 
-//        <logger name="org.springframework.data.mybatis" level="INFO"/>
         Logger mybatisLogger = context.getLogger("org.springframework.data.mybatis");
         mybatisLogger.setLevel(Level.INFO);
-//        <logger name="org.springframework.aop.aspectj" level="ERROR"/>
         Logger aspectjLogger = context.getLogger("org.springframework.aop.aspectj");
         aspectjLogger.setLevel(Level.ERROR);
-//        <logger name="org.springframework.web" level="INFO"/>
         Logger webLogger = context.getLogger("org.springframework.web");
         webLogger.setLevel(Level.INFO);
-//        <logger name="org.springframework.security" level="WARN"/>
         Logger securityLogger = context.getLogger("org.springframework.security");
         securityLogger.setLevel(Level.WARN);
-//        <logger name="org.springframework.cache" level="WARN"/>
         Logger cacheLogger = context.getLogger("org.springframework.cache");
         cacheLogger.setLevel(Level.WARN);
-//        <logger name="org.springframework.core" level="WARN"/>
         Logger springCore = context.getLogger("org.springframework.core");
         springCore.setLevel(Level.INFO);
-//        <logger name="org.springframework.boot" level="INFO"/>
         Logger springBoot = context.getLogger("org.springframework.boot");
         springBoot.setLevel(Level.INFO);
-//        <logger name="org.springframework.beans" level="INFO"/>
         Logger springBeans = context.getLogger("org.springframework.beans");
         springBeans.setLevel(Level.INFO);
-//        <logger name="org.springframework" level="INFO"/>
         Logger spring = context.getLogger("org.springframework");
         spring.setLevel(Level.INFO);
-//        <logger name="org.apache.kafka" level="INFO"/>
-        Logger kafkaSpringLogger = context.getLogger("org.apache.kafka");
-        kafkaSpringLogger.setLevel(Level.INFO);
-//        <logger name="org.mybatis.spring" level="INFO"/>
         Logger mybatisSpringLogger = context.getLogger("org.mybatis.spring");
         mybatisSpringLogger.setLevel(Level.INFO);
-//        <logger name="org.mongodb.driver.cluster" level="WARN" />
-        Logger mongoLogger = context.getLogger("org.mongodb.driver.cluster");
-        mongoLogger.setLevel(Level.WARN);
-
-//    <logger name="javax.activation" level="WARN"/>
-        Logger activationLogger = context.getLogger("javax.activation");
-        activationLogger.setLevel(Level.WARN);
-//    <logger name="javax.mail" level="WARN"/>
-        Logger mailLogger = context.getLogger("javax.mail");
-        mailLogger.setLevel(Level.WARN);
-//    <logger name="javax.xml.bind" level="WARN"/>
-        Logger xmlBindLogger = context.getLogger("javax.xml.bind");
-        xmlBindLogger.setLevel(Level.WARN);
-//    <logger name="ch.qos.logback" level="WARN"/>
-        Logger logback = context.getLogger("ch.qos.logback");
-        logback.setLevel(Level.WARN);
-//    <logger name="com.sun" level="WARN"/>
-        Logger sunLogger = context.getLogger("com.sun");
-        sunLogger.setLevel(Level.WARN);
-//    <logger name="org.apache" level="WARN"/>
-        Logger apacheLogger = context.getLogger("org.apache");
-        apacheLogger.setLevel(Level.WARN);
-//    <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
-        Logger digesterFactoryLogger = context.getLogger("org.apache.catalina.startup.DigesterFactory");
-        digesterFactoryLogger.setLevel(Level.OFF);
-//    <logger name="org.hibernate.validator" level="WARN"/>
-        Logger hibernateValidatorLogger = context.getLogger("org.hibernate.validator");
-        hibernateValidatorLogger.setLevel(Level.WARN);
-//    <logger name="org.hibernate" level="WARN"/>
-        Logger hibernateLogger = context.getLogger("org.hibernate");
-        hibernateLogger.setLevel(Level.WARN);
-//    <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
-        Logger hibernatePersistenceLogger = context.getLogger("org.hibernate.ejb.HibernatePersistence");
-        hibernatePersistenceLogger.setLevel(Level.OFF);
-//    <logger name="sun.rmi.transport" level="WARN"/>
-        Logger rmiTransportLogger = context.getLogger("sun.rmi.transport");
-        rmiTransportLogger.setLevel(Level.WARN);
 
         Appender<ch.qos.logback.classic.spi.ILoggingEvent> rollingFileAppender = rollingFileAppender(context);
         Appender<ch.qos.logback.classic.spi.ILoggingEvent> consoleAppender = consoleAppender(context);
@@ -209,14 +159,14 @@ public final class LeekariLog {
         RollingFileAppender<ch.qos.logback.classic.spi.ILoggingEvent> appender = new RollingFileAppender<>();
         appender.setName("leekari-file");
         appender.setContext(context);
-        appender.setFile(OptionHelper.substVars("hilogs"+File.separator+logger.getName()+".log", context));
+        appender.setFile(OptionHelper.substVars("leekari-logs"+File.separator+logger.getName()+".log", context));
         appender.setAppend(true);
         appender.setPrudent(false);
 
 
 
         SizeAndTimeBasedRollingPolicy policy = new SizeAndTimeBasedRollingPolicy();
-        String pattern = OptionHelper.substVars("hilogs"+File.separator+logger.getName()+"-%d{yyyyMMdd}[%i].log", context);
+        String pattern = OptionHelper.substVars("leekari-logs"+File.separator+logger.getName()+"-%d{yyyyMMdd}[%i].log", context);
         policy.setMaxFileSize(FileSize.valueOf("10MB"));
         policy.setFileNamePattern(pattern);
         policy.setParent(appender);
