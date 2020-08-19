@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * @description
  */
 public interface FileService {
-    void createFileRecord(MultipartFile file) throws Exception;
+    boolean createFileRecord(MultipartFile file, Integer sourceCode) throws Exception;
 
     void downloadFile(String fileId, HttpServletResponse response) throws Exception;
 }

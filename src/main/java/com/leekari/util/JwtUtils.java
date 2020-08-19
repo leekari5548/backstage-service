@@ -1,5 +1,7 @@
 package com.leekari.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.leekari.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,11 +19,11 @@ import java.util.Map;
 public class JwtUtils {
 
     public static final String TOKEN_HEADER = "Authorization";
-    public static final String TOKEN_PREFIX = "Bearer ";
+    public static final String TOKEN_PREFIX = "Leekari";
 
-    public static final String SUBJECT = "congge";
+    public static final String SUBJECT = "leekari";
 
-    public static final long EXPIRITION = 1000 * 24 * 60 * 60 * 7;
+    public static final long EXPIRE_TIME = 1000 * 24 * 60 * 60 * 7;
 
     public static final String APP_SECRET_KEY = "leekari_secret";
 
@@ -29,44 +31,20 @@ public class JwtUtils {
 
     public static String generateJsonWebToken(User user) {
 
-        if (user.getId() == null || user.getUsername() == null || user.getPicture() == null) {
+        if (user.getId() == null || user.getUsername() == null) {
             return null;
         }
 
         Map<String,Object> map = new HashMap<>();
-        map.put(ROLE_CLAIMS, "rol");
+        map.put(ROLE_CLAIMS, user.getRole());
 
         String token = Jwts
                 .builder()
                 .setSubject(SUBJECT)
                 .setClaims(map)
-                .claim("id", user.getId())
-                .claim("name", user.getUsername())
-                .claim("img", user.getPicture())
+                .claim("user", JSON.toJSONString(user))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRITION))
-                .signWith(SignatureAlgorithm.HS256, APP_SECRET_KEY).compact();
-        return token;
-    }
-
-    /**
-     * 生成token
-     * @param username
-     * @param role
-     * @return
-     */
-    public static String createToken(String username,String role) {
-
-        Map<String,Object> map = new HashMap<>();
-        map.put(ROLE_CLAIMS, role);
-
-        String token = Jwts
-                .builder()
-                .setSubject(username)
-                .setClaims(map)
-                .claim("username",username)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + EXPIRITION))
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_TIME))
                 .signWith(SignatureAlgorithm.HS256, APP_SECRET_KEY).compact();
         return token;
     }

@@ -2,7 +2,6 @@ package com.leekari.config;
 
 import io.minio.MinioClient;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,7 +10,6 @@ import org.springframework.stereotype.Component;
  * @description
  */
 @Component
-@RefreshScope
 public class MinioConfiguration {
 
     private static String endpoint;

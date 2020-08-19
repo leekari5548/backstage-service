@@ -1,5 +1,6 @@
 package com.leekari.controller;
 
+import com.leekari.config.NoAuthVerify;
 import com.leekari.define.ModuleEnum;
 import com.leekari.service.FileService;
 import com.leekari.util.Result;
@@ -30,17 +31,18 @@ public class FileController {
     private final static Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @RequestMapping(value = "upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result<String> upload(MultipartFile file){
+    public Result<String> upload(MultipartFile file, Integer sourceCode){
         try {
-            fileService.createFileRecord(file);
+            fileService.createFileRecord(file, sourceCode);
             return new Result.Builder<String>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").builder();
         }catch (Exception e){
             e.printStackTrace();
             return new Result.Builder<String>().code(-1).type(ModuleEnum.FILE_MODULE.name).message("error").builder();
         }
-
     }
 
+
+    @NoAuthVerify
     @RequestMapping("download/{fileId}")
     public Result<String> download(@PathVariable String fileId, final HttpServletResponse response){
         try {

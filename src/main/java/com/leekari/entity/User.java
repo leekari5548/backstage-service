@@ -1,28 +1,60 @@
 package com.leekari.entity;
 
+import java.util.Date;
+
 /**
  * @author litao
  * @date 2020/7/30 17:34
  * @description
  */
 public class User {
-    private Integer id;
+    private String id;
+    private String loginName;
     private String username;
     private String phone;
     private String password;
     private String role;
     private String picture;
+    private Date createTime;
+    private Date lastOperationTime;
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
+                ", loginName='" + loginName + '\'' +
                 ", username='" + username + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
                 ", picture='" + picture + '\'' +
+                ", createTime=" + createTime +
+                ", lastOperationTime=" + lastOperationTime +
                 '}';
+    }
+
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getLastOperationTime() {
+        return lastOperationTime;
+    }
+
+    public void setLastOperationTime(Date lastOperationTime) {
+        this.lastOperationTime = lastOperationTime;
     }
 
     public String getPicture() {
@@ -33,11 +65,11 @@ public class User {
         this.picture = picture;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

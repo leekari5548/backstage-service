@@ -4,6 +4,7 @@ import com.leekari.config.MinioConfiguration;
 import com.leekari.dao.FileRecordDao;
 import com.leekari.dao.LogRecordDao;
 import com.leekari.define.ModuleEnum;
+import com.leekari.define.SourceEnum;
 import com.leekari.entity.FileRecord;
 import com.leekari.entity.LogRecord;
 import com.leekari.service.FileService;
@@ -16,7 +17,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,7 +33,6 @@ import java.util.Date;
  * @description
  */
 @Service
-@RefreshScope
 public class FileServiceImpl implements FileService {
     @Autowired
     private FileRecordDao fileRecordDao;
@@ -45,19 +44,25 @@ public class FileServiceImpl implements FileService {
     private final static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
-    public void createFileRecord(MultipartFile file) throws Exception{
+    public boolean createFileRecord(MultipartFile file, Integer sourceCode) throws Exception{
+        System.err.println(sourceCode);
+        SourceEnum sourceEnum = SourceEnum.getSourceEnum(sourceCode);
+        System.err.println(sourceEnum);
+        if (sourceEnum == null) {
+            return false;
+        }
         MinioClient minioClient = MinioConfiguration.minioClient();
         String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         ObjectWriteResponse response = minioClient.putObject(PutObjectArgs
                 .builder()
-                .bucket(bucket)
+                .bucket(sourceEnum.name)
                 .object(filename)
                 .stream(file.getInputStream(), file.getSize(), -1)
                 .build());
         logger.info("version = {}, tag = {}", response.versionId(), response.etag());
         FileRecord fileRecord = new FileRecord();
         fileRecord.setId(CommonUtils.uuid());
-        fileRecord.setBucket(bucket);
+        fileRecord.setBucket(sourceEnum.name);
         fileRecord.setFilename(file.getOriginalFilename());
         fileRecord.setStoreFilename(filename);
         fileRecord.setCreateTime(new Date());
@@ -72,6 +77,7 @@ public class FileServiceImpl implements FileService {
         logRecord.setType(ModuleEnum.FILE_MODULE.code);
         logRecord.setOperator("admin");
         logRecordDao.insertRecord(logRecord);
+        return true;
     }
 
     private byte[] getBytesByInputStream(InputStream is) {
@@ -99,7 +105,7 @@ public class FileServiceImpl implements FileService {
         MinioClient minioClient = MinioConfiguration.minioClient();
         InputStream stream =
                 minioClient.getObject(
-                        GetObjectArgs.builder().bucket(bucket).object(realFilename).build());
+                        GetObjectArgs.builder().bucket(fileRecord.getBucket()).object(realFilename).build());
         byte[] data = getBytesByInputStream(stream);
         OutputStream outputStream = new BufferedOutputStream(response.getOutputStream());
         outputStream.write(data);

@@ -1,6 +1,6 @@
 package com.leekari.config;
 
-import com.leekari.interceptor.LeekariInterceptor;
+//import com.leekari.interceptor.LeekariInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -19,14 +19,14 @@ public class LeekariWebMvcConfiguration implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("*")
                 .allowCredentials(true)
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .allowedMethods("GET", "POST", "DELETE", "PUT","OPTIONS")
                 .allowedHeaders("*")
                 .maxAge(3600);
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LeekariInterceptor()).addPathPatterns("/**").excludePathPatterns("/test/**");
-
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(new LeekariInterceptor()).addPathPatterns("/**").excludePathPatterns("/actuator/**");
+//
+//    }
 }
