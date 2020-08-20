@@ -12,4 +12,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface UserDao {
 
     int insertUser(User user);
+
+    User getUserInfo(String id);
 }

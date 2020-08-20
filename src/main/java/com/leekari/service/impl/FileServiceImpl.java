@@ -44,12 +44,10 @@ public class FileServiceImpl implements FileService {
     private final static Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
-    public boolean createFileRecord(MultipartFile file, Integer sourceCode) throws Exception{
-        System.err.println(sourceCode);
+    public String createFileRecord(MultipartFile file, Integer sourceCode) throws Exception{
         SourceEnum sourceEnum = SourceEnum.getSourceEnum(sourceCode);
-        System.err.println(sourceEnum);
         if (sourceEnum == null) {
-            return false;
+            return "";
         }
         MinioClient minioClient = MinioConfiguration.minioClient();
         String filename = System.currentTimeMillis() + "_" + file.getOriginalFilename();
@@ -61,7 +59,8 @@ public class FileServiceImpl implements FileService {
                 .build());
         logger.info("version = {}, tag = {}", response.versionId(), response.etag());
         FileRecord fileRecord = new FileRecord();
-        fileRecord.setId(CommonUtils.uuid());
+        String fileId = CommonUtils.uuid();
+        fileRecord.setId(fileId);
         fileRecord.setBucket(sourceEnum.name);
         fileRecord.setFilename(file.getOriginalFilename());
         fileRecord.setStoreFilename(filename);
@@ -77,7 +76,7 @@ public class FileServiceImpl implements FileService {
         logRecord.setType(ModuleEnum.FILE_MODULE.code);
         logRecord.setOperator("admin");
         logRecordDao.insertRecord(logRecord);
-        return true;
+        return fileId;
     }
 
     private byte[] getBytesByInputStream(InputStream is) {

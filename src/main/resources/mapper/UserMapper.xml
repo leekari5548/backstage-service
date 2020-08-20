@@ -4,24 +4,30 @@
 
     <resultMap type="com.leekari.entity.User" id="BaseResultMap">
         <id property="id" column="id" jdbcType="VARCHAR"/>
-        <result property="username" column="username" jdbcType="VARCHAR"/>
-        <result property="loginName" column="login_name" jdbcType="VARCHAR"/>
+        <result property="email" column="email" jdbcType="VARCHAR"/>
+        <result property="nickname" column="nickname" jdbcType="VARCHAR"/>
         <result property="picture" column="picture" jdbcType="VARCHAR"/>
         <result property="password" column="password" jdbcType="VARCHAR"/>
         <result property="phone" column="phone" jdbcType="VARCHAR"/>
-        <result property="role" column="role" jdbcType="VARCHAR"/>
+        <result property="role" column="role" jdbcType="INTEGER"/>
         <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
         <result property="lastOperationTime" column="last_operation_time" jdbcType="TIMESTAMP"/>
     </resultMap>
 
     <sql id="baseColumn">
-        id,login_name,username,password,phone,picture,role,create_time,last_operation_time
+        id,`email`,nickname,password,phone,picture,`role`,create_time,last_operation_time
     </sql>
 
     <insert id="insertUser" parameterType="com.leekari.entity.User">
-        insert into log_record(<include refid="baseColumn"></include>)
-        values(#{id,jdbcType=VARCHAR},#{loginName,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},
-        #{picture,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},#{create_time,jdbcType=TIMESTAMP},#{last_operation_time,jdbcType=TIMESTAMP})
+        insert into `user`(<include refid="baseColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},
+        #{picture,jdbcType=VARCHAR},#{role,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{lastOperationTime,jdbcType=TIMESTAMP})
     </insert>
+
+    <select id="getUserInfo" parameterType="string" resultMap="BaseResultMap">
+        select <include refid="baseColumn"></include>
+        from `user`
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

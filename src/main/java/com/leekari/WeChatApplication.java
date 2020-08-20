@@ -36,6 +36,10 @@ public class WeChatApplication extends SpringBootServletInitializer implements C
         LeekariLog.setLevel("io.netty", Level.INFO);
         LeekariLog.setLevel("de.codecentric", Level.INFO);
         LeekariLog.setLevel("com.zaxxer.hikari", Level.INFO);
+        LeekariLog.setLevel("sun.rmi", Level.INFO);
+        LeekariLog.setLevel("org.apache.tomcat", Level.INFO);
+        LeekariLog.setLevel("org.apache.catalina", Level.INFO);
+        LeekariLog.setLevel("jdk.event.security", Level.INFO);
     }
 
     @Override

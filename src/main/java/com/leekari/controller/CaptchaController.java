@@ -5,6 +5,7 @@ import cn.hutool.captcha.LineCaptcha;
 import com.alibaba.fastjson.JSONObject;
 import com.leekari.config.NoAuthVerify;
 import com.leekari.define.BasicConst;
+import com.leekari.util.CommonUtils;
 import com.leekari.util.RedisUtils;
 import com.leekari.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,15 @@ public class CaptchaController {
         String code = circleCaptcha.getCode();
         redisUtils.set(param + BasicConst.PIC_VERIFY_SUFFIX, code, 6000);
         try {
-            response.setHeader("Cache-Control", "no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setDateHeader("Expires", 0);
-            response.setContentType(MediaType.IMAGE_PNG_VALUE);
-            circleCaptcha.write(response.getOutputStream());
-        } catch (IOException e) {
+            String image = circleCaptcha.getImageBase64();
+            JSONObject dataJson = new JSONObject();
+            dataJson.put("img", "data:image/png;base64," + image);
+            dataJson.put("verifyId", CommonUtils.uuid());
+            dataJson.put("verifyCode", circleCaptcha.getCode());
+            return new Result.Builder<JSONObject>().data(dataJson).builder();
+        } catch (Exception e) {
             e.printStackTrace();
             return new Result.Builder<JSONObject>().builder();
         }
-        return null;
     }
 }

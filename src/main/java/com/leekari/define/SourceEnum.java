@@ -7,7 +7,8 @@ package com.leekari.define;
  */
 public enum SourceEnum {
     COMMON_SOURCE(0, "common-source"), WECHAT_SOURCE(1, "wechat-source"),
-    VUE_SOURCE(2, "vue-source"), REACT_SOURCE(3, "react-source"), TEMP_SOURCE(-1, "temp");
+    VUE_SOURCE(2, "vue-source"), REACT_SOURCE(3, "react-source"), TEMP_SOURCE(-1, "temp"),
+    AVATAR_SOURCE(4, "avatar-source");
 
     public int code;
     public String name;

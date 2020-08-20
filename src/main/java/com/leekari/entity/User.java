@@ -9,21 +9,22 @@ import java.util.Date;
  */
 public class User {
     private String id;
-    private String loginName;
-    private String username;
+    private String email;
+    private String nickname;
     private String phone;
     private String password;
-    private String role;
+    private Integer role;
     private String picture;
     private Date createTime;
     private Date lastOperationTime;
+
 
     @Override
     public String toString() {
         return "User{" +
                 "id='" + id + '\'' +
-                ", loginName='" + loginName + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 ", role='" + role + '\'' +
@@ -31,14 +32,6 @@ public class User {
                 ", createTime=" + createTime +
                 ", lastOperationTime=" + lastOperationTime +
                 '}';
-    }
-
-    public String getLoginName() {
-        return loginName;
-    }
-
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
     }
 
     public Date getCreateTime() {
@@ -73,12 +66,21 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getPhone() {
@@ -97,11 +99,11 @@ public class User {
         this.password = password;
     }
 
-    public String getRole() {
+    public Integer getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Integer role) {
         this.role = role;
     }
 }

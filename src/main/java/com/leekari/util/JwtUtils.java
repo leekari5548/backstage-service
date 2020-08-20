@@ -31,7 +31,7 @@ public class JwtUtils {
 
     public static String generateJsonWebToken(User user) {
 
-        if (user.getId() == null || user.getUsername() == null) {
+        if (user.getId() == null || user.getNickname() == null) {
             return null;
         }
 

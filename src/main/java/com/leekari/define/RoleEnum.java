@@ -6,7 +6,7 @@ package com.leekari.define;
  * @description
  */
 public enum RoleEnum {
-    NORMAL_USER(0, "normal");
+    NORMAL_USER(0, "normal"),SUPER_ADMIN(1,"super");
     public int code;
     public String name;
 
