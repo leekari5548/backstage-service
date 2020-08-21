@@ -2,6 +2,7 @@ package com.leekari.dao;
 
 import com.leekari.entity.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * @author litao
@@ -13,5 +14,5 @@ public interface UserDao {
 
     int insertUser(User user);
 
-    User getUserInfo(String id);
+    User getUserInfo(@Param("id") String id, @Param("phone") String phone, @Param("email") String email, @Param("password") String password);
 }

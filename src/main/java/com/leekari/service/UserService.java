@@ -11,4 +11,6 @@ public interface UserService {
     JSONObject addUser(String avatar, String phone, String email, String password, String nickName);
 
     JSONObject userInfo(String userId);
+
+    JSONObject login(String loginId, String password);
 }

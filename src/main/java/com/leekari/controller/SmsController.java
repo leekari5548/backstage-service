@@ -21,8 +21,8 @@ public class SmsController {
     static final String domain = "dysmsapi.aliyuncs.com";
 
     // TODO 此处需要替换成开发者自己的AK(在阿里云访问控制台寻找)
-    static final String accessKeyId = "LTAIGRFOaBnHkkcs";           // TODO 改这里
-    static final String accessKeySecret = "HJM8dxnmXnHqDoTwl96L0ROr2J7RYi"; // TODO 改这里
+    static final String accessKeyId = "****************";           // TODO 改这里
+    static final String accessKeySecret = "****************"; // TODO 改这里
 
     public static SendSmsResponse sendSms(String telephone, String code) throws ClientException {
 
@@ -40,9 +40,9 @@ public class SmsController {
         // 必填:待发送手机号
         request.setPhoneNumbers(telephone);
         // 必填:短信签名-可在短信控制台中找到
-        request.setSignName("leekari的个人服务"); // TODO 改这里
+        request.setSignName("***************"); // TODO 改这里
         // 必填:短信模板-可在短信控制台中找到
-        request.setTemplateCode("SMS_198365373");  // TODO 改这里
+        request.setTemplateCode("******************");  // TODO 改这里
         // 可选:模板中的变量替换JSON串,如模板内容为"亲爱的用户,您的验证码为${code}"时,此处的值为
         request.setTemplateParam("{\"code\":\"" + code + "\"}");
 
@@ -73,7 +73,7 @@ public class SmsController {
     public static void main(String[] args) throws Exception {
         setNewcode();
         String code = Integer.toString(getNewcode());
-        SendSmsResponse sendSms =sendSms("18234009399",code);//填写你需要测试的手机号码
+        SendSmsResponse sendSms =sendSms("***************",code);//填写你需要测试的手机号码
         System.out.println("短信接口返回的数据----------------");
         System.out.println("Code=" + sendSms.getCode());
         System.out.println("Message=" + sendSms.getMessage());

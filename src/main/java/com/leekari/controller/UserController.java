@@ -35,7 +35,16 @@ public class UserController {
 
 
     @RequestMapping("info")
-    public Result<JSONObject> userinfo(@RequestHeader String token,@RequestAttribute String userId){
+    public Result<JSONObject> userinfo(String token,String userId){
         return new Result.Builder<JSONObject>().data(userService.userInfo(userId)).builder();
+    }
+
+    @RequestMapping("login")
+    public Result<JSONObject> login(String loginId, String password){
+        JSONObject jo = userService.login(loginId, password);
+        if (jo == null) {
+            return new Result.Builder<JSONObject>().code(-1).message("邮箱/手机号或者密码错误").builder();
+        }
+        return new Result.Builder<JSONObject>().data(jo).builder();
     }
 }

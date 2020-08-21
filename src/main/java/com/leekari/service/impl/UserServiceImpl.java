@@ -53,8 +53,28 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public JSONObject userInfo(String userId) {
-        User user = userDao.getUserInfo(userId);
+        User user = userDao.getUserInfo(userId, null ,null, null);
         JSONObject dataJson = JSON.parseObject(JSON.toJSONString(user));
+        return dataJson;
+    }
+
+
+    @Override
+    public JSONObject login(String loginId, String password) {
+        User user = userDao.getUserInfo(null, loginId, null, password);
+        if (user == null) {
+            user = userDao.getUserInfo(null, null, loginId, password);
+        }
+        if (user == null) {
+            return null;
+        }
+        JSONObject dataJson = new JSONObject();
+        String token = JwtUtils.generateJsonWebToken(user);
+        dataJson.put("token", token);
+        dataJson.put("userId", user.getId());
+        dataJson.put("role", user.getRole());
+        JSONObject userinfo = JSON.parseObject(JSON.toJSONString(user));
+        dataJson.put("userinfo", userinfo);
         return dataJson;
     }
 }
