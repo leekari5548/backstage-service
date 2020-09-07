@@ -1,17 +1,18 @@
 package com.leekari.dao;
 
-import com.leekari.entity.Menu;
+import com.leekari.entity.BlogType;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
 /**
  * @author litao
- * @date 2020/8/19 14:20
+ * @date 2020/8/31 09:30
  * @description
  */
 @Mapper
-public interface MenuDao {
+public interface BlogTypeDao {
 
-    List<Menu> getAllMenu(Integer menuType);
+    List<BlogType> getAllBlogType();
+
 }

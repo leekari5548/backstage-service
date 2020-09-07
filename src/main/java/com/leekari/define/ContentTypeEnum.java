@@ -2,15 +2,15 @@ package com.leekari.define;
 
 /**
  * @author litao
- * @date 2020/7/31 11:36
+ * @date 2020/9/7 10:57
  * @description
  */
-public enum RoleEnum {
-    NORMAL_USER(0, "normal"),SUPER_ADMIN(509,"super");
+public enum ContentTypeEnum {
+    BLOG(0, "blog");
+
     public int code;
     public String name;
-
-    RoleEnum(int code, String name) {
+    ContentTypeEnum(int code, String name){
         this.code = code;
         this.name = name;
     }

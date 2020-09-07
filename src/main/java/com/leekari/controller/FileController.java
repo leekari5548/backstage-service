@@ -36,13 +36,15 @@ public class FileController {
     private final static Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @RequestMapping(value = "upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result<String> upload(MultipartFile file, Integer sourceCode){
+    public Result<JSONObject> upload(MultipartFile file, Integer sourceCode){
         try {
-            fileService.createFileRecord(file, sourceCode);
-            return new Result.Builder<String>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").builder();
+            String id = fileService.createFileRecord(file, sourceCode);
+            JSONObject dataJson = new JSONObject();
+            dataJson.put("fileId", "/file/download/"+id);
+            return new Result.Builder<JSONObject>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").data(dataJson).builder();
         }catch (Exception e){
             e.printStackTrace();
-            return new Result.Builder<String>().code(-1).type(ModuleEnum.FILE_MODULE.name).message("error").builder();
+            return new Result.Builder<JSONObject>().code(-1).type(ModuleEnum.FILE_MODULE.name).message("error").builder();
         }
     }
 

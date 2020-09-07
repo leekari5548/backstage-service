@@ -24,6 +24,23 @@
         #{picture,jdbcType=VARCHAR},#{role,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP},#{lastOperationTime,jdbcType=TIMESTAMP})
     </insert>
 
+    <select id="getUsers" parameterType="string" resultType="int">
+        select count(*)
+        from `user`
+        where phone = #{phone,jdbcType=VARCHAR} or email = #{email,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getUserById" parameterType="string" resultMap="BaseResultMap">
+        select <include refid="baseColumn"></include>
+        from `user`
+        where id = #{id, jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAllUsers" resultMap="BaseResultMap">
+        select <include refid="baseColumn"></include>
+        from `user`
+    </select>
+
     <select id="getUserInfo" parameterType="string" resultMap="BaseResultMap">
         select <include refid="baseColumn"></include>
         from `user`
@@ -32,13 +49,13 @@
                 and id = #{id,jdbcType=VARCHAR}
             </if>
             <if test="phone != null and phone != ''">
-                and phone != #{phone,jdbcType=VARCHAR}
+                and phone = #{phone,jdbcType=VARCHAR}
             </if>
             <if test="email != null and email != ''">
-                and email != #{email,jdbcType=VARCHAR}
+                and email = #{email,jdbcType=VARCHAR}
             </if>
             <if test="password != null and password != ''">
-                and password != #{password,jdbcType=VARCHAR}
+                and password = #{password,jdbcType=VARCHAR}
             </if>
         </where>
         limit 0,1

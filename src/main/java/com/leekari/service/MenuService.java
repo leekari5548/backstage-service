@@ -12,5 +12,5 @@ import java.util.List;
  */
 public interface MenuService {
 
-    JSONObject getAll();
+    JSONObject getAll(Integer menuType);
 }

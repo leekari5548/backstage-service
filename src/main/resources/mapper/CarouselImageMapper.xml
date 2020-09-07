@@ -16,6 +16,10 @@
         id,image_id,`source`,create_user,create_time,is_deleted,`order`
     </sql>
 
+    <sql id="baseColumnWithoutId">
+        image_id,`source`,create_user,create_time,is_deleted,`order`
+    </sql>
+
     <select id="getCarouselImage" resultMap="BaseResultMap" parameterType="int">
         select <include refid="baseColumn"></include>
         from carousel_img
@@ -23,4 +27,18 @@
         order by `order` asc
     </select>
 
+    <update id="deleteCarousels" parameterType="list">
+        update carousel_img
+        set is_deleted = 1
+        where id in
+        <foreach collection="idList" index="index" item="item" separator="," close=")" open="(">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </update>
+
+    <insert id="insertCarousel" parameterType="com.leekari.entity.CarouselImage">
+        insert into carousel_img(<include refid="baseColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{imageId,jdbcType=VARCHAR},#{source,jdbcType=INTEGER},#{createUser,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{deleted,jdbcType=INTEGER},#{order,jdbcType=INTEGER})
+    </insert>
 </mapper>

@@ -20,6 +20,44 @@ public class Menu {
     private Integer deleted;
     private String icon;
     private Integer order;
+    private Integer menuType;
+    private String router;
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", menuKey='" + menuKey + '\'' +
+                ", menuName='" + menuName + '\'' +
+                ", menuLevel=" + menuLevel +
+                ", pid='" + pid + '\'' +
+                ", createUser='" + createUser + '\'' +
+                ", updateUser='" + updateUser + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", deleted=" + deleted +
+                ", icon='" + icon + '\'' +
+                ", order=" + order +
+                ", menuType=" + menuType +
+                ", router='" + router + '\'' +
+                '}';
+    }
+
+    public String getRouter() {
+        return router;
+    }
+
+    public void setRouter(String router) {
+        this.router = router;
+    }
+
+    public Integer getMenuType() {
+        return menuType;
+    }
+
+    public void setMenuType(Integer menuType) {
+        this.menuType = menuType;
+    }
 
     public Integer getOrder() {
         return order;
@@ -35,22 +73,6 @@ public class Menu {
 
     public void setIcon(String icon) {
         this.icon = icon;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-                "id='" + id + '\'' +
-                ", menuKey='" + menuKey + '\'' +
-                ", menuName='" + menuName + '\'' +
-                ", menuLevel=" + menuLevel +
-                ", pid='" + pid + '\'' +
-                ", createUser='" + createUser + '\'' +
-                ", updateUser='" + updateUser + '\'' +
-                ", createTime=" + createTime +
-                ", updateTime=" + updateTime +
-                ", deleted=" + deleted +
-                '}';
     }
 
     public Integer getDeleted() {

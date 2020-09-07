@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leekari.dao.BlogTypeDao">
+
+    <resultMap type="com.leekari.entity.BlogType" id="BaseResultMap">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="typeName" column="type_name" jdbcType="VARCHAR"/>
+        <result property="lastOperationUser" column="last_operation_user" jdbcType="VARCHAR"/>
+        <result property="lastOperationTime" column="last_operation_time" jdbcType="VARCHAR"/>
+        <result property="deleted" column="is_deleted" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <sql id="baseColumn">
+        id,type_name,last_operation_user,last_operation_time,is_deleted
+    </sql>
+
+    <select id="getAllBlogType" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="baseColumn"></include>
+        from blog_type
+        where is_deleted = 0
+        order by id
+    </select>
+
+
+</mapper>

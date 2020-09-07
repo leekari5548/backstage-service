@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leekari.dao.TagDao">
+
+    <resultMap type="com.leekari.entity.Tag" id="BaseResultMap">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="tagName" column="tag_name" jdbcType="VARCHAR"/>
+        <result property="associateUser" column="associate_user" jdbcType="VARCHAR"/>
+        <result property="lastOperationTime" column="last_operation_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="is_deleted" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="baseColumn">
+        id,tag_name,associate_user,last_operation_time,is_deleted
+    </sql>
+
+    <select id="getTagsByUser" resultMap="BaseResultMap" parameterType="string">
+        select <include refid="baseColumn"></include>
+        from tag
+        where is_deleted = 0
+        <if test="userId != null">
+            and associate_user=#{userId,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <insert id="insertTag" parameterType="com.leekari.entity.Tag">
+        insert into tag(<include refid="baseColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{tagName,jdbcType=VARCHAR},#{associateUser,jdbcType=VARCHAR},
+        #{lastOperationTime,jdbcType=TIMESTAMP},#{deleted,jdbcType=INTEGER})
+    </insert>
+
+    <insert id="batchInsertTag" parameterType="java.util.List">
+        insert into tag(<include refid="baseColumn"></include>)
+        values
+        <foreach collection="list" separator="," index="index"  item="item">
+            (#{item.id,jdbcType=VARCHAR},#{item.tagName,jdbcType=VARCHAR},#{item.associateUser,jdbcType=VARCHAR},
+            #{item.lastOperationTime,jdbcType=TIMESTAMP},#{item.deleted,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <select id="getTagsByIds" parameterType="string" resultMap="BaseResultMap">
+        select <include refid="baseColumn"></include>
+        from tag
+        where id in
+        <foreach collection="list" item="item" close=")" open="(" index="index" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        and is_deleted = 0
+    </select>
+
+</mapper>

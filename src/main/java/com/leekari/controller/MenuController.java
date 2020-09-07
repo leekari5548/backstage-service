@@ -19,7 +19,7 @@ public class MenuController {
     private MenuService menuService;
 
     @RequestMapping("list")
-    public Result<JSONObject> getMenu(){
-        return new Result.Builder<JSONObject>().data(menuService.getAll()).builder();
+    public Result<JSONObject> getMenu(Integer menuType){
+        return new Result.Builder<JSONObject>().data(menuService.getAll(menuType)).builder();
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +18,9 @@ public final class RedisUtils {
 
     @Autowired
     private StringRedisTemplate redisTemplate;
+
+//    public List<String> getAll(){
+//    }
 
     public Set<String> keys(String keys) {
         try {

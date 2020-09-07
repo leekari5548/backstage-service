@@ -26,8 +26,8 @@ public class MenuServiceImpl implements MenuService {
     private MenuDao menuDao;
 
     @Override
-    public JSONObject getAll() {
-        List<Menu> menus = menuDao.getAllMenu();
+    public JSONObject getAll(Integer menuType) {
+        List<Menu> menus = menuDao.getAllMenu(menuType);
         List<Menu> mainMenus= menus.stream().filter(menu -> menu.getMenuLevel().equals(0)).collect(Collectors.toList());
         JSONObject json = new JSONObject();
         json.put("list", mainMenus);

@@ -1,8 +1,8 @@
 package com.leekari.service;
 
 import com.alibaba.fastjson.JSONObject;
-
-import java.util.List;
+import com.leekari.util.Result;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author litao
@@ -12,4 +12,8 @@ import java.util.List;
 public interface CarouselImageService {
 
     JSONObject getAllCarouseImages(Integer type);
-}
+
+    Result<JSONObject> deleteCarousel(String id);
+
+    Result<JSONObject> uploadCarousel(MultipartFile file, String userId) throws Exception;
+ }

@@ -15,16 +15,21 @@
         <result property="deleted" column="is_deleted" jdbcType="INTEGER"/>
         <result property="icon" column="icon" jdbcType="VARCHAR"/>
         <result property="order" column="order" jdbcType="INTEGER"/>
+        <result property="menuType" column="menu_type" jdbcType="INTEGER"/>
+        <result property="router" column="router" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="baseColumn">
-        id,parent_menu_id,menu_key,menu_name,menu_level,create_user,update_user,create_time,update_time,is_deleted,icon,`order`
+        id,parent_menu_id,menu_key,menu_name,menu_level,create_user,update_user,create_time,update_time,is_deleted,icon,`order`,menu_type,router
     </sql>
 
-    <select id="getAllMenu" resultMap="BaseResultMap" >
+    <select id="getAllMenu" resultMap="BaseResultMap" parameterType="int">
         select <include refid="baseColumn"></include>
         from menu
         where is_deleted = 0
+        <if test="menuType != null">
+            and menu_type=#{menuType,jdbcType=INTEGER}
+        </if>
         order by `order` asc
     </select>
 

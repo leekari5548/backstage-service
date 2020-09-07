@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leekari.dao.BlogDao">
+
+    <resultMap type="com.leekari.entity.BlogContent" id="blogContentMap">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="articleId" column="article_id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="status" column="status" jdbcType="INTEGER"/>
+        <result property="stars" column="stars" jdbcType="INTEGER"/>
+        <result property="comments" column="comments" jdbcType="INTEGER"/>
+        <result property="likes" column="likes" jdbcType="INTEGER"/>
+        <result property="views" column="views" jdbcType="INTEGER"/>
+        <result property="tags" column="tags" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="blogArticleMap" type="com.leekari.entity.BlogArticle">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="articleContentMd" column="article_content_md" jdbcType="VARCHAR"/>
+        <result property="articleContentHtml" column="article_content_html" jdbcType="VARCHAR"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="deleted" column="is_deleted" jdbcType="INTEGER"/>
+        <result property="articleTitle" column="article_title" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="blogListMap" type="com.leekari.entity.view.BlogList">
+        <id property="id" column="id" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP" />
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="comments" column="comments" jdbcType="INTEGER" />
+        <result property="stars" column="stars" jdbcType="INTEGER" />
+        <result property="createUserImageUrl" column="picture" jdbcType="VARCHAR"/>
+        <result property="description" column="article_content_html" jdbcType="VARCHAR"/>
+        <result property="likes" column="likes" jdbcType="INTEGER" />
+        <result property="views" column="views" jdbcType="INTEGER" />
+        <result property="title" column="article_title" jdbcType="VARCHAR" />
+        <result property="mdContent" column="article_content_md" jdbcType="VARCHAR" />
+        <result property="tags" column="tags" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="blogListColumn">
+        blog_article.id,blog_article.create_time,blog_article.create_user,blog_content.comments,blog_content.stars,
+        `user`.picture,blog_article.article_content_html,blog_content.likes,blog_content.views,blog_article.article_title
+    </sql>
+
+    <sql id="blogContentColumn">
+        id,article_id,create_time,is_deleted,create_user,status,stars,comments,likes,views,tags,`type`
+    </sql>
+
+    <sql id="blogArticleColumn">
+        id,article_content_md,article_content_html,create_user,create_time,is_deleted,article_title
+    </sql>
+
+    <sql id="blogDetailColumn">
+        blog_article.id,blog_article.create_time,blog_article.create_user,blog_content.comments,blog_content.stars,
+        `user`.picture,blog_article.article_content_md,blog_content.likes,blog_content.views,blog_article.article_title,blog_content.tags
+    </sql>
+
+    <insert id="insertBlogContent" parameterType="com.leekari.entity.BlogContent">
+        insert into blog_content(<include refid="blogContentColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{articleId,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{deleted,jdbcType=INTEGER},
+        #{createUser,jdbcType=VARCHAR},#{status,jdbcType=INTEGER},#{stars,jdbcType=INTEGER},#{comments,jdbcType=INTEGER},#{likes,jdbcType=INTEGER},
+        #{views,jdbcType=INTEGER},#{tags,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR})
+    </insert>
+
+    <insert id="insertBlogArticle" parameterType="com.leekari.entity.BlogArticle">
+        insert into blog_article(<include refid="blogArticleColumn"></include>)
+        values(#{id,jdbcType=VARCHAR},#{articleContentMd,jdbcType=VARCHAR},#{articleContentHtml,jdbcType=VARCHAR},#{createUser,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},#{deleted,jdbcType=INTEGER},#{articleTitle,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getBlogDetail" parameterType="string" resultMap="blogListMap">
+        select <include refid="blogDetailColumn"></include>
+        from blog_article
+        inner join blog_content on blog_content.article_id = blog_article.id
+        inner join `user` on `user`.nickname = blog_article.create_user
+        where blog_article.id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getBlogListByIdList" parameterType="java.util.List" resultMap="blogListMap">
+        select <include refid="blogListColumn"></include>
+        from blog_article
+        inner join blog_content on blog_content.article_id = blog_article.id
+        inner join `user` on `user`.nickname = blog_article.create_user
+        where blog_content.article_id in
+        <foreach collection="list" item="item" close=")" open="(" index="index" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+        order by blog_article.create_time desc
+    </select>
+<!--    or blog_article.article_content_md like '%'#{title,jdbcType=VARCHAR}'%'-->
+
+    <select id="getBlogList" parameterType="string" resultMap="blogListMap">
+        select <include refid="blogListColumn"></include>
+        from blog_article
+        inner join blog_content on blog_content.article_id = blog_article.id
+        inner join `user` on `user`.nickname = blog_article.create_user
+        <where>
+            <if test="title != null and title != ''">
+                and (blog_article.article_title like concat('%',#{title,jdbcType=VARCHAR},'%')
+                or blog_article.article_content_md like concat('%',#{title,jdbcType=VARCHAR},'%'))
+            </if>
+<!--            <if test="startTime != null and endTime != null">-->
+<!--                and blog_article.create_time &lt; #{startTime,jdbcType=VARCHAR}-->
+<!--                and blog_article.create_time &gt; #{endTime,jdbcType=VARCHAR}-->
+<!--            </if>-->
+        </where>
+        order by blog_article.create_time desc
+    </select>
+
+    <select id="getBlogContent" parameterType="string" resultMap="blogContentMap">
+        select <include refid="blogContentColumn"></include>
+        from blog_content
+        where article_id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getBlogArticle" parameterType="string" resultMap="blogArticleMap">
+        select <include refid="blogArticleColumn"></include>
+        from blog_article
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateBlogContent" parameterType="com.leekari.entity.BlogContent">
+        update blog_content
+        set tags = #{tags,jdbcType=VARCHAR}
+        <if test="type != '' and type != null">
+            ,`type` = #{type,jdbcType=VARCHAR}
+        </if>
+        where article_id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateBlogArticle" parameterType="com.leekari.entity.BlogArticle">
+        update blog_article
+        set article_content_md = #{articleContentMd,jdbcType=VARCHAR},
+        article_content_html = #{articleContentHtml,jdbcType=VARCHAR},
+        article_title = #{articleTitle,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

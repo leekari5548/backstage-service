@@ -11,7 +11,7 @@ import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
 
 @SpringBootApplication
-public class WeChatApplication extends SpringBootServletInitializer implements CommandLineRunner, EnvironmentAware {
+public class WeChatApplication extends SpringBootServletInitializer{
     private Environment environment;
 
     public static void main(String[] args) {
@@ -23,27 +23,28 @@ public class WeChatApplication extends SpringBootServletInitializer implements C
         return application.sources(WeChatApplication.class);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        boolean flag = LeekariLog.init(environment);
-        if (flag) {
-            LeekariLog.info("init success");
-        }else {
-            LeekariLog.warn("init error");
-        }
-        LeekariLog.setLevel("sun.rmi.loader", Level.INFO);
-        LeekariLog.setLevel("io.lettuce", Level.INFO);
-        LeekariLog.setLevel("io.netty", Level.INFO);
-        LeekariLog.setLevel("de.codecentric", Level.INFO);
-        LeekariLog.setLevel("com.zaxxer.hikari", Level.INFO);
-        LeekariLog.setLevel("sun.rmi", Level.INFO);
-        LeekariLog.setLevel("org.apache.tomcat", Level.INFO);
-        LeekariLog.setLevel("org.apache.catalina", Level.INFO);
-        LeekariLog.setLevel("jdk.event.security", Level.INFO);
-    }
-
-    @Override
-    public void setEnvironment(Environment environment) {
-        this.environment = environment;
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+//        boolean flag = LeekariLog.init(environment);
+//        if (flag) {
+//            LeekariLog.info("init success");
+//        }else {
+//            LeekariLog.warn("init error");
+//        }
+//        LeekariLog.setLevel("sun.rmi.loader", Level.INFO);
+//        LeekariLog.setLevel("io.lettuce", Level.INFO);
+//        LeekariLog.setLevel("io.netty", Level.INFO);
+//        LeekariLog.setLevel("de.codecentric", Level.INFO);
+//        LeekariLog.setLevel("com.zaxxer.hikari", Level.INFO);
+//        LeekariLog.setLevel("sun.rmi", Level.INFO);
+//        LeekariLog.setLevel("org.apache.tomcat", Level.INFO);
+//        LeekariLog.setLevel("org.apache.catalina", Level.INFO);
+//        LeekariLog.setLevel("jdk.event.security", Level.INFO);
+//        LeekariLog.setLevel("org.apache.coyote", Level.INFO);
+//    }
+//
+//    @Override
+//    public void setEnvironment(Environment environment) {
+//        this.environment = environment;
+//    }
 }
