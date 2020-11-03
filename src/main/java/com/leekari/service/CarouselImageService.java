@@ -13,6 +13,8 @@ public interface CarouselImageService {
 
     JSONObject getAllCarouseImages(Integer type);
 
+    JSONObject getAllCarouseImagesManage(Integer type);
+
     Result<JSONObject> deleteCarousel(String id);
 
     Result<JSONObject> uploadCarousel(MultipartFile file, String userId) throws Exception;

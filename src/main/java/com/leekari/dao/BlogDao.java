@@ -33,4 +33,6 @@ public interface BlogDao {
     int updateBlogArticle(BlogArticle blogArticle);
 
     List<BlogList> getBlogListByIdList(@Param("list") List<String> ids);
+
+    int logicDeleteBlog(List<String> ids);
 }

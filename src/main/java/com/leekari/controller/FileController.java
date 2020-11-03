@@ -36,109 +36,29 @@ public class FileController {
     private final static Logger logger = LoggerFactory.getLogger(FileController.class);
 
     @RequestMapping(value = "upload",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Result<JSONObject> upload(MultipartFile file, Integer sourceCode){
-        try {
-            String id = fileService.createFileRecord(file, sourceCode);
-            JSONObject dataJson = new JSONObject();
-            dataJson.put("fileId", "/file/download/"+id);
-            return new Result.Builder<JSONObject>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").data(dataJson).builder();
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Result.Builder<JSONObject>().code(-1).type(ModuleEnum.FILE_MODULE.name).message("error").builder();
-        }
+    public Result<JSONObject> upload(MultipartFile file, Integer sourceCode) throws Exception {
+        String id = fileService.createFileRecord(file, sourceCode);
+        JSONObject dataJson = new JSONObject();
+        dataJson.put("fileId", "/file/download/"+id);
+        return new Result.Builder<JSONObject>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").data(dataJson).builder();
     }
 
     @RequestMapping(value = "upload/avatar")
-    public Result<JSONObject> uploadAvatar(HttpServletRequest request){
-        try {
-            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-//            Iterator<String> it = multipartHttpServletRequest.getFileNames();
-//            if (it.hasNext()) {
-//                System.err.println(it.next());
-//            }
-            MultipartFile file = multipartHttpServletRequest.getFile("file");
-//            System.err.println(file.getOriginalFilename());
-            String fileId = fileService.createFileRecord(file, SourceEnum.AVATAR_SOURCE.code);
-            JSONObject dataJson = new JSONObject();
-            dataJson.put("avatarUrl", "/file/download/"+fileId);
-            return new Result.Builder<JSONObject>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").data(dataJson).builder();
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Result.Builder<JSONObject>().code(-1).type(ModuleEnum.FILE_MODULE.name).message("error").builder();
-        }
-    }
+    public Result<JSONObject> uploadAvatar(HttpServletRequest request) throws Exception {
+        MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+        MultipartFile file = multipartHttpServletRequest.getFile("file");
+        String fileId = fileService.createFileRecord(file, SourceEnum.AVATAR_SOURCE.code);
+        JSONObject dataJson = new JSONObject();
+        dataJson.put("avatarUrl", "/file/download/"+fileId);
+        return new Result.Builder<JSONObject>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").data(dataJson).builder();
 
-    public static boolean base64ToImageFile(String base64, String path) throws IOException {// 对字节数组字符串进行Base64解码并生成图片
-        // 生成jpeg图片
-        try {
-            OutputStream out = new FileOutputStream(path);
-            return base64ToImageOutput(base64, out);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * 处理Base64解码并输出流
-     *
-     * @param base64
-     * @param out
-     * @return
-     */
-    public static boolean base64ToImageOutput(String base64, OutputStream out) throws IOException {
-        if (base64 == null) { // 图像数据为空
-            return false;
-        }
-        try {
-            // Base64解码
-            byte[] bytes = Base64.decodeBase64(base64);
-            for (int i = 0; i < bytes.length; ++i) {
-                if (bytes[i] < 0) {// 调整异常数据
-                    bytes[i] += 256;
-                }
-            }
-            // 生成jpeg图片
-            out.write(bytes);
-            out.flush();
-            return true;
-        } finally {
-            try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
     }
 
 
     @NoAuthVerify
     @RequestMapping("download/{fileId}")
-    public Result<String> download(@PathVariable String fileId, final HttpServletResponse response){
-        try {
-            fileService.downloadFile(fileId, response);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new Result.Builder<String>().code(-100).type(ModuleEnum.FILE_MODULE.name).message("file isn't exist").builder();
-        }
+    public Result<String> download(@PathVariable String fileId, final HttpServletResponse response) throws Exception {
+        fileService.downloadFile(fileId, response);
         return new Result.Builder<String>().code(0).type(ModuleEnum.FILE_MODULE.name).message("success").builder();
-    }
-
-    public static byte[] getBytesByInputStream(InputStream is) {
-        try {
-            ByteArrayOutputStream bos = new ByteArrayOutputStream(1000);
-            byte[] b = new byte[1000];
-            int n;
-            while ((n = is.read(b)) != -1) {
-                bos.write(b, 0, n);
-            }
-            is.close();
-            byte[] data = bos.toByteArray();
-            bos.close();
-            return data;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

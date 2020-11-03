@@ -33,16 +33,11 @@ public class CaptchaController {
         LineCaptcha circleCaptcha = CaptchaUtil.createLineCaptcha(200, 100, 4,5);
         String code = circleCaptcha.getCode();
         redisUtils.set(param + BasicConst.PIC_VERIFY_SUFFIX, code, 6000);
-        try {
-            String image = circleCaptcha.getImageBase64();
-            JSONObject dataJson = new JSONObject();
-            dataJson.put("img", "data:image/png;base64," + image);
-            dataJson.put("verifyId", CommonUtils.uuid());
-            dataJson.put("verifyCode", circleCaptcha.getCode());
-            return new Result.Builder<JSONObject>().data(dataJson).builder();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result.Builder<JSONObject>().builder();
-        }
+        String image = circleCaptcha.getImageBase64();
+        JSONObject dataJson = new JSONObject();
+        dataJson.put("img", "data:image/png;base64," + image);
+        dataJson.put("verifyId", CommonUtils.uuid());
+        dataJson.put("verifyCode", circleCaptcha.getCode());
+        return new Result.Builder<JSONObject>().data(dataJson).builder();
     }
 }

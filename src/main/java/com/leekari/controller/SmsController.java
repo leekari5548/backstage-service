@@ -13,6 +13,9 @@ import com.aliyuncs.profile.IClientProfile;
  * @description
  */
 
+/**
+ * @deprecated
+ */
 public class SmsController {
 
     // 产品名称:云通信短信API产品,开发者无需替换

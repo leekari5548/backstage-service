@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,9 +35,9 @@ import java.util.Date;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    @Autowired
+    @Resource
     private FileRecordDao fileRecordDao;
-    @Autowired
+    @Resource
     private LogRecordDao logRecordDao;
 
     @Value("${MinioClient.bucket}")
@@ -68,6 +69,7 @@ public class FileServiceImpl implements FileService {
         fileRecord.setFileType(file.getContentType());
         fileRecord.setCreateUser("admin");
         fileRecord.setDelete(0);
+        fileRecord.setSize(file.getSize());
         fileRecord.setMd5(CommonUtils.md5(new String(file.getBytes())));
         fileRecordDao.insertRecord(fileRecord);
         LogRecord logRecord = new LogRecord();

@@ -12,17 +12,18 @@
         <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
         <result property="storeFilename" column="store_filename" jdbcType="VARCHAR"/>
         <result property="delete" column="is_delete" jdbcType="INTEGER"/>
+        <result property="size" column="size" jdbcType="INTEGER"/>
     </resultMap>
 
     <sql id="baseColumn">
-        `id`,`filename`,`file_type`,`md5`,`bucket`,`create_time`,`create_user`,`store_filename`,`is_delete`
+        `id`,`filename`,`file_type`,`md5`,`bucket`,`create_time`,`create_user`,`store_filename`,`is_delete`,`size`
     </sql>
 
     <insert id="insertRecord" parameterType="com.leekari.entity.FileRecord">
         insert into file_record(<include refid="baseColumn"></include>)
         values(#{id,jdbcType=VARCHAR},#{filename,jdbcType=VARCHAR},#{fileType,jdbcType=VARCHAR},
         #{md5,jdbcType=VARCHAR},#{bucket,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},
-        #{createUser,jdbcType=VARCHAR},#{storeFilename,jdbcType=VARCHAR},#{delete,jdbcType=INTEGER})
+        #{createUser,jdbcType=VARCHAR},#{storeFilename,jdbcType=VARCHAR},#{delete,jdbcType=INTEGER},#{size,jdbcType=INTEGER})
     </insert>
 
     <select id="getFileRecordById" resultMap="BaseResultMap" parameterType="string">

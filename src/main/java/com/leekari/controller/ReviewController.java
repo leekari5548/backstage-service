@@ -3,7 +3,6 @@ package com.leekari.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.leekari.service.ReviewService;
 import com.leekari.util.Result;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -17,6 +17,7 @@ public class FileRecord {
     private String fileType;
     private String storeFilename;
     private Integer delete;
+    private Long size;
 
     @Override
     public String toString() {
@@ -31,6 +32,14 @@ public class FileRecord {
                 ", storeFilename='" + storeFilename + '\'' +
                 ", delete=" + delete +
                 '}';
+    }
+
+    public Long getSize() {
+        return size;
+    }
+
+    public void setSize(Long size) {
+        this.size = size;
     }
 
     public Integer getDelete() {

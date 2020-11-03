@@ -33,12 +33,14 @@ public class StartRunner implements CommandLineRunner {
         LeekariLog.setLevel("io.lettuce", Level.INFO);
         LeekariLog.setLevel("io.netty", Level.INFO);
         LeekariLog.setLevel("de.codecentric", Level.INFO);
-        LeekariLog.setLevel("com.zaxxer.hikari", Level.INFO);
+//        LeekariLog.setLevel("com.zaxxer.hikari", Level.INFO);
         LeekariLog.setLevel("sun.rmi", Level.INFO);
         LeekariLog.setLevel("org.apache.tomcat", Level.INFO);
         LeekariLog.setLevel("org.apache.catalina", Level.INFO);
         LeekariLog.setLevel("jdk.event.security", Level.INFO);
         LeekariLog.setLevel("org.apache.coyote", Level.INFO);
+        LeekariLog.setLevel("org.thymeleaf", Level.INFO);
+        LeekariLog.setLevel("com.leekari.dao", Level.INFO);
         userService.initUserCache();
     }
 }

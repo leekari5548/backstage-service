@@ -16,7 +16,6 @@ import com.leekari.service.UserService;
 import com.leekari.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
@@ -244,7 +243,15 @@ public class BlogServiceImpl implements BlogService {
         return new Result.Builder<JSONObject>().data(dataJson).builder();
     }
 
-    public void test(int... s){
+//    public void test(int... s){
+//
+//    }
 
+    @Override
+    public Result<JSONObject> deleteBlog(String id) {
+        List<String> ids = new ArrayList<>();
+        ids.add(id);
+        blogDao.logicDeleteBlog(ids);
+        return new Result<>();
     }
 }

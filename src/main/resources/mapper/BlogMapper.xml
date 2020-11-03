@@ -108,6 +108,7 @@
 <!--                and blog_article.create_time &lt; #{startTime,jdbcType=VARCHAR}-->
 <!--                and blog_article.create_time &gt; #{endTime,jdbcType=VARCHAR}-->
 <!--            </if>-->
+            and blog_article.is_deleted = 0
         </where>
         order by blog_article.create_time desc
     </select>
@@ -139,5 +140,16 @@
         article_content_html = #{articleContentHtml,jdbcType=VARCHAR},
         article_title = #{articleTitle,jdbcType=VARCHAR}
         where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="logicDeleteBlog" parameterType="java.util.List">
+        update blog_article
+        set is_deleted = 1
+        where id in
+        <foreach collection="ids" index="index" item="id" close=")" open="(" separator=",">
+            <if test="id != null and id != ''">
+                #{id,jdbcType=VARCHAR}
+            </if>
+        </foreach>
     </update>
 </mapper>

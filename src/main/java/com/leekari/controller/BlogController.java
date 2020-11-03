@@ -24,6 +24,11 @@ public class BlogController {
     @Autowired
     private BlogService blogService;
 
+    @RequestMapping("delete")
+    Result<JSONObject> deleteBlog(String id){
+        return blogService.deleteBlog(id);
+    }
+
     @RequestMapping("type/list")
     Result<JSONObject> typeList(){
         return blogService.listBlogType();

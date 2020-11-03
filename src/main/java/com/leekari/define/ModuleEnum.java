@@ -6,7 +6,7 @@ package com.leekari.define;
  * @description
  */
 public enum ModuleEnum {
-    FILE_MODULE(1, "file_module"),LOGIN_MODULE(2, "login_module");
+    FILE_MODULE(1, "file_module"),LOGIN_MODULE(2, "login_module"),ERROR_MODULE(3, "error_module");
     public int code;
     public String name;
 

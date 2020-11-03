@@ -21,4 +21,6 @@ public interface BlogService {
     Result<JSONObject> listBlogType();
 
     Result<JSONObject> mostPopular();
+
+    Result<JSONObject> deleteBlog(String id);
 }
