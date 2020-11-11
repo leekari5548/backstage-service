@@ -44,20 +44,26 @@ public class ExcelUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        File file = new File("/Users/litao/Desktop/文安县数据.xlsx");
-        System.err.println(file.exists());
-        FileInputStream fis = new FileInputStream(file);
+        File baseFile = new File("/Users/litao/Desktop/test1.xlsx");
+        File compareFile = new File("/Users/litao/Desktop/test2.xlsx");
+        System.err.println(compareFile.exists());
+        System.err.println(baseFile.exists());
+        int baseColumn = 2;
+        int compareColumn = 3;
+        FileInputStream fis = new FileInputStream(baseFile);
         Workbook workbook = getExcelInputStream(fis, 0);
         int sheetNumber = workbook.getNumberOfSheets();
         int sheet = 0;
+        Map<String, Map<Integer, String>> baseMap = new HashMap<>();
         Map<Integer, List<Map<Integer, String>>> map = new HashMap<>();
         for (int i = 0; i < sheetNumber; i++) {
             Sheet sheetAt = workbook.getSheetAt(i);
             int lastRowNum = sheetAt.getLastRowNum();
             int titleRowNum = sheetAt.getFirstRowNum();
             List<Map<Integer, String>> list = new ArrayList<>();
-            int count = 0;
-            for (int j = titleRowNum; j < lastRowNum; ++j) {
+
+            for (int j = titleRowNum + 1; j < lastRowNum; ++j) {
+                int count = 0;
                 Map<Integer, String> rowMap = new HashMap<>();
                 Row row = sheetAt.getRow(j);
                 int cells = row.getPhysicalNumberOfCells();
@@ -65,18 +71,38 @@ public class ExcelUtils {
                 for (int k = start; k < cells; ++k) {
                     rowMap.put(count++, row.getCell(k) == null ? "": row.getCell(k).toString());
                 }
+                baseMap.put(rowMap.get(baseColumn - 1), rowMap);
                 list.add(rowMap);
             }
             map.put(sheet++, list);
         }
-        File writeFile = new File("/Users/litao/Desktop/data.txt");
-        if (!writeFile.exists()) {
-            writeFile.createNewFile();
+        FileInputStream cfis = new FileInputStream(baseFile);
+        Workbook cworkbook = getExcelInputStream(fis, 0);
+        int csheetNumber = workbook.getNumberOfSheets();
+        int csheet = 0;
+        Map<String, Map<Integer, String>> cbaseMap = new HashMap<>();
+        Map<Integer, List<Map<Integer, String>>> cmap = new HashMap<>();
+        for (int i = 0; i < sheetNumber; i++) {
+            Sheet csheetAt = cworkbook.getSheetAt(i);
+            int clastRowNum = csheetAt.getLastRowNum();
+            int ctitleRowNum = csheetAt.getFirstRowNum();
+            List<Map<Integer, String>> clist = new ArrayList<>();
+
+            for (int j = ctitleRowNum + 1; j < clastRowNum; ++j) {
+                int count = 0;
+                Map<Integer, String> crowMap = new HashMap<>();
+                Row crow = csheetAt.getRow(j);
+                int cells = crow.getPhysicalNumberOfCells();
+                int start = crow.getFirstCellNum();
+                for (int k = start; k < cells; ++k) {
+                    crowMap.put(count++, crow.getCell(k) == null ? "": crow.getCell(k).toString());
+                }
+                baseMap.put(crowMap.get(baseColumn - 1), crowMap);
+                clist.add(crowMap);
+            }
+            map.put(sheet++, clist);
         }
-        FileInputStream fileInputStream = new FileInputStream(writeFile);
-        fileInputStream.read(JSONObject.toJSONBytes(map));
-        fileInputStream.close();
-        fis.close();
-//        System.err.println(map);
+        System.err.println(map);
+        System.err.println(baseMap);
     }
 }
